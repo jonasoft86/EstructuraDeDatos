@@ -22,6 +22,7 @@ private:
 	void imprimirPreOrdenABB(Nodo *nodo);
 	void imprimirEnOrdenABB(Nodo *nodo);
 	void imprimirPostOrdenABB(Nodo *nodo);
+	Nodo* buscarNodoABB(Nodo* nodo,int dato);
 	
 public:
 	ABB();
@@ -35,6 +36,7 @@ public:
 	void imprimirPreOrden();
 	void imprimirEnOrden();
 	void imprimirPostOrden();
+	void buscarNodo(int dato);
 };
 
 ABB::ABB(){
@@ -350,18 +352,53 @@ void ABB::imprimirPostOrdenABB(Nodo* nodo)
 {
     if (raiz!=NULL)
     {
-        if (nodo->derecho != NULL)
-        {
-            imprimirPostOrdenABB(nodo->derecho);
-        }
-        cout<<nodo->dato<<" ";
+
         if (nodo->izquierdo != NULL)
         {
             imprimirPostOrdenABB(nodo->izquierdo);
         }
+        
+        if (nodo->derecho != NULL)
+        {
+            imprimirPostOrdenABB(nodo->derecho);
+        }
+        
+        cout<<nodo->dato<<" ";
     }
     else
         cout<<"El arbol esta vacio!\n";
+}
+
+void ABB::buscarNodo(int dato)
+{
+	Nodo *nodo = buscarNodoABB(raiz,dato);
+	cout<<" Dato encontrado: "<<nodo->dato;
+}
+
+ABB::Nodo* ABB::buscarNodoABB(Nodo *nodo,int dato)
+{
+	if(nodo!=NULL)
+	{
+		if(nodo->dato == dato)
+		{
+			return nodo;
+		}
+		else
+		{
+			if(dato < nodo->dato)
+			{
+				return buscarNodoABB(nodo->izquierdo,dato);
+			}
+			else
+			{
+				return buscarNodoABB(nodo->derecho,dato);
+			}
+		}
+	}
+	else
+	{
+		return NULL;
+	}
 }
 
 
@@ -369,10 +406,15 @@ int main()
 {
 	ABB miArbol;
 
-	miArbol.insertar(50);
-	miArbol.insertar(76);
-	miArbol.insertar(21);
-	miArbol.insertar(23);
+	miArbol.insertar(8);
+	miArbol.insertar(3);
+	miArbol.insertar(1);
+	miArbol.insertar(6);
+	miArbol.insertar(4);
+	miArbol.insertar(7);
+	miArbol.insertar(10);
+	miArbol.insertar(14);
+	miArbol.insertar(13);
 	
 	miArbol.verArbol(0);
 	cout<<"\n";
